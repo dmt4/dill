@@ -1,0 +1,12 @@
+/img/build-root*
+/dhcpd/dhcpd.lease*
+/nbd/nbd.conf
+*.key
+*.pid
+/named/conf/named.conf
+/named/run/*
+id_rsa*
+authorized_keys
+ssh_host_rsa_key*
+ssh_known_hosts
+

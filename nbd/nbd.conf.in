@@ -1,0 +1,15 @@
+[generic]
+    user = root
+    group = root
+    allowlist = true
+    listenaddr = 10.0.0.1
+    port = 10809
+
+[export]
+    exportname = PPWD/img/build-root.nbd
+    authfile = PPWD/nbd/nbd.allow
+    readonly = true
+#    readonly = false
+#    copyonwrite = true
+#    sparse_cow = false
+#    sparse_cow = true

@@ -1,0 +1,10 @@
+; https://en.wikipedia.org/wiki/Zone_file
+; https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-BIND.html
+$ORIGIN 0.0.10.in-addr.arpa.
+$TTL 1h                                  ; e-mail,  ser num, refresh, retry, expiry, minimum
+@   IN SOA       ns.coop.cls. postmaster.coop.cls. (2015102301    3h     1h      1w      1d )
+    IN  NS       ns.coop.cls.
+1   IN PTR       ns.coop.cls.
+    IN PTR      ref.coop.cls.
+    IN PTR      ftp.coop.cls.
+    IN PTR peer-001.coop.cls.

@@ -1,0 +1,91 @@
+# /usr/share/doc/packages/bind/sample-config.
+
+acl coop {
+    10.0.0.0/24;
+};
+
+options {
+
+    # The directory statement defines the name server's working directory
+
+    directory "PPWD/named/run";
+    key-directory "PPWD/named/conf";
+    pid-file "PPWD/named/run/pid";
+    statistics-file "PPWD/named/run/stats";
+    session-keyfile "PPWD/named/run/session.key";
+
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+
+    listen-on port 53 {
+        10.0.0.1;
+    };
+
+    #listen-on-v6 { any; };
+
+    allow-query {
+        coop;
+        localhost;
+    };
+
+    allow-recursion {
+        coop;
+        localhost;
+    };
+
+    allow-transfer {
+        none;
+    };
+
+    allow-update {
+        none;
+    };
+
+    notify no;
+
+    disable-empty-zone "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.IP6.ARPA";
+};
+
+
+
+include "PPWD/named/conf/rndc.key";
+
+zone "." IN {
+    type hint;
+    file "root.hint";
+};
+
+zone "localhost" IN {
+    type master;
+    file "localhost.zone";
+};
+
+zone "0.0.127.in-addr.arpa" IN {
+    type master;
+    file "127.0.0.zone";
+};
+
+zone "0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa" IN {
+    type master;
+    file "127.0.0.zone";
+};
+
+zone "coop.cls" IN {
+    type master;
+    file "fwd.coop.zone";
+    allow-update {
+        key rndc-key;
+    };
+};
+
+zone "0.0.10.in-addr.arpa" IN {
+    type master;
+    file "rev.coop.zone";
+    allow-update {
+        key rndc-key;
+    };
+};
+
+

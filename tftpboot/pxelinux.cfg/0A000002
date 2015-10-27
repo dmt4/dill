@@ -1,0 +1,22 @@
+DEFAULT dhcproot
+
+LABEL dhcproot
+    kernel boot/vmlinuz
+    append initrd=boot/initrd root=dhcp ip=eth0:dhcp
+
+LABEL nfs
+    kernel boot/vmlinuz
+    append initrd=boot/initrd root=nfs4:10.0.0.1:/ ip=eth0:dhcp rw rd.shell rd.debug log_buf_len=1M
+
+LABEL nbd
+    kernel boot/vmlinuz
+    append initrd=boot/initrd  root=nbd:10.0.0.1:10809:ext4:rw:-Nexport ip=eth0:dhcp rw
+
+LABEL A
+    append  rd.shell rd.debug bootdev=eth0 log_buf_len=1M  bootdev=eth0 init=/bin/bash rd.break=pre-mount rd.debug  rd.retry=4 rd.timeout=16 rd.shell rd.debug rd.break=pre-mount
+
+LABEL Local-Boot
+    localboot 0
+
+PROMPT 1
+TIMEOUT 1

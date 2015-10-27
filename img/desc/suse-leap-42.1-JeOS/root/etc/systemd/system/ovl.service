@@ -1,0 +1,16 @@
+[Unit]
+Description=Populate the overlayfs ram mount with 'upper' and 'work' dirs
+DefaultDependencies=no
+RequiresMountsFor=/ovl
+Before=var.mount
+Before=etc.mount
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev ovl.conf
+
+
+[Install]
+RequiredBy = var.mount
+RequiredBy = etc.mount
