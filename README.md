@@ -1,4 +1,4 @@
-# Setup a virtual hpc cluster with openSUSE Leap in seconds
+# HPC cluster with openSUSE Leap in seconds
 
 Diskless mode with root on network block device. Deployment to 
 local drive is simple to add. Using other systemd based distros 
