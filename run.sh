@@ -15,16 +15,16 @@ ma=( \
 ##########################################3
 
 bins=(systemctl systemd-run vde_switch \
-    dhcpd named rndc-confgen atftpd \
-    rpc.mountd rpc.nfsd exportfs  \
-    nbd-server qemu-system-x86_64   \
-    kiwi mkfs.ext4 xpath ssh-keygen \
+    dhcpd named rndc-confgen atftpd dd \
+    rpc.mountd rpc.nfsd exportfs xpath \
+    nbd-server qemu-system-x86_64 sudo \
+    mkfs.ext4 ssh-keygen kiwi          \
 )
 
 for i in ${bins[@]} ; do
     which $i
     if [ "$?" != "0" ]; then
-        echo get yourself $i and try again, exitting now ...
+        echo get yourself $i from somewhere and try again, exitting now ...
         exit 1
     fi
 done
