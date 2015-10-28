@@ -25,7 +25,7 @@ function mkpkey() {
     popd
 }
 
-for i in $(xpath  ${desc}/config.xml '/image/users/user[@password=""]//attribute::home' 2>/dev/null); do
+for i in $(xpath  ${desc}/config.xml '/image/users/user[@password="!"]//attribute::home' 2>/dev/null); do
 #     the eval shall produce the home variable
     eval $i
     [ -f ${desc}/root${home}/.ssh/id_rsa ] || mkpkey $home

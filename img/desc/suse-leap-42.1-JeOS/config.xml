@@ -20,10 +20,10 @@
         <rpm-check-signatures>false</rpm-check-signatures>
     </preferences>
     <users group="root">
-        <user password='' home="/root" name="root"/>
+        <user password='!' home="/root" name="root"/>
     </users>
     <users group="users">
-        <user password='' home="/home/dmt" name="dmt"/>
+        <user password='!' home="/home/dill" name="dill"/>
     </users>
     <repository type="yast2" imageinclude="true" alias="repo-oss">
         <source path="http://download.opensuse.org/distribution/leap/42.1/repo/oss/"/>
@@ -40,7 +40,7 @@
         <package name="ifplugd"/>
         <package name="syslinux"/>
         <package name="dhcp-client"/>
-        <package name="NetworkManager"/>
+<!--        <package name="NetworkManager"/> -->
         <package name="wicked"/>
         <package name="curl"/>
         <package name="openssh"/>
