@@ -11,10 +11,11 @@ based distros.
 * kernel v4.1.11
 * pxe boot
 * isolated dhcp and key authenticated dynamic dns on private ipv4 subnet
-* nfsv4 or nbd mounter root with normal/stock initrd
+* nfs4 or nbd mounter root with normal/stock initrd
 * overlayfs mounted on /etc and /var, tmpfs on /tmp
-* pssh for flexible runs at scale
+* the rootfs can be easily touched up offline or run with systemd-nspawn
 * host based authentication for regular users
+* pssh for flexible runs at scale
 * slurm queuing and scheduling system
 
 Ephemeral:
@@ -31,7 +32,7 @@ and 6.1 for 13.2. Run `./run.sh`.
 On first run there will be questions about passphrases for the ssh keys. 
 
 
-## Connect
+## Connect and run
 
 Passwords are disabled. Use the auto generated key to access, e.g.
 
@@ -71,6 +72,8 @@ If in doubt, try
 ## TODO
 
 * Streamline configuration
+* Move some infrastructure functionality to the nodes
+* Increase reliability through redundancy
 * Remove assumption on network interface name
 * Try IPv6
 * Masquerade host net device to allow inet access
@@ -84,9 +87,9 @@ If in doubt, try
 ## See also
 
 * PelicanHPC
+* Perceus
 * Warewulf
 * Rocks
 * xCAT
-* Perceus
 * Cobbler
 
