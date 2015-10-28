@@ -71,6 +71,7 @@ If in doubt, try
 ## TODO
 
 * Streamline configuration
+* Remove assumption on network interface name
 * Try IPv6
 * Masquerade host net device to allow inet access
 * Export /opt and $HOME with NFS.
@@ -86,5 +87,6 @@ If in doubt, try
 * Warewulf
 * Rocks
 * xCAT
+* Perceus
 * Cobbler
 
