@@ -1,14 +1,12 @@
-# HPC cluster with openSUSE Leap in seconds
+# HPC cluster with openSUSE Leap in minutes
 
-Diskless mode with root on network block device. Deployment to 
-local drive is simple to add. Using other systemd based distros 
-shall be possible too.
+Diskless mode with network mounted root. Deployment to 
+local drive shall be simple to add. Possible to replicate on other systemd 
+based distros.
 
 
 ## Contents
 
-* kvm with host cpu pass through
-* virtual switch networking with vde
 * openSUSE Leap (SLE 12 base) rootfs build with KIWI
 * kernel v4.1.11
 * pxe boot
@@ -18,7 +16,12 @@ shall be possible too.
 * pssh for flexible runs at scale
 * host based authentication for regular users
 * slurm queuing and scheduling system
+
+Ephemeral:
 * run in systemd scope for easy tracking of daemons
+* kvm with host cpu pass through
+* virtual switch networking with vde
+
 
 ## Setup
 
