@@ -1,0 +1,13 @@
+
+[Match]
+Name=eth*
+
+[Network]
+Description=wiredint
+DHCP=yes
+
+[DHCP]
+UseDomains=true
+#ClientIdentifier=mac
+#ClientIdentifier=duid
+CriticalConnection=true

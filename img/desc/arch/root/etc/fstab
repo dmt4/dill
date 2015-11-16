@@ -1,0 +1,9 @@
+devpts  /dev/pts devpts  mode=0620,gid=5 0 0
+proc    /proc    proc    defaults        0 0
+tmpfs   /tmp     tmpfs   mode=0755,uid=0,gid=0,size=128M  0 0
+tmpfs   /ovl     tmpfs   mode=0755,uid=0,gid=0,size=128M  0 0
+overlay /var     overlay lowerdir=/var,upperdir=/ovl/var/u,workdir=/ovl/var/w 0 0
+overlay /etc     overlay lowerdir=/etc,upperdir=/ovl/etc/u,workdir=/ovl/etc/w 0 0
+overlay /root    overlay lowerdir=/root,upperdir=/ovl/root/u,workdir=/ovl/root/w 0 0
+overlay /home    overlay lowerdir=/home,upperdir=/ovl/home/u,workdir=/ovl/home/w 0 0
+

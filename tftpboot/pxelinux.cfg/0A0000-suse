@@ -1,9 +1,5 @@
-DEFAULT nbdarch
+DEFAULT dhcproot
 
-LABEL nbdarch
-    kernel boot/vmlinuz
-    append initrd=boot/initrd ip=::::::dhcp root=/dev/nbd0 ro nbd_host=10.0.0.1 nbd_name=export init=/usr/lib/systemd/systemd
-    
 LABEL dhcproot
     kernel boot/vmlinuz
     append initrd=boot/initrd root=dhcp ip=eth0:dhcp systemd.mask=slurmctld.service

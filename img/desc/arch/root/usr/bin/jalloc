@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+u=$1
+r=$2
+
+[ -z "$u" -o -z "$r" ] && echo user or resource request not specified
+[ -z "$u" -o -z "$r" ] && exit 1
+
+mkdir -p /var/spool/j
+pushd /var/spool/j
+[ -f j ] || echo 0 > j
+j=$(cat j)
+mkdir $j
+pushd $j
+[ -f /etc/pssh/avail ] || pssh -h /etc/pssh/all hostname | grep SUCCESS | awk '{print $4}' > /etc/pssh/avail
+tail -n $r /etc/pssh/avail > h
+echo hosts `cat h`
+pssh -h h cgcreate -g cpuset:compu/j$j -t ${u}:${u}
+pssh -h h cgset -r cpuset.cpus=0,2 -r cpuset.mems=0 compu/j$j
+pssh -h h mkdir -p /var/spool/j
+prsync -av -h h /var/spool/j/$j /var/spool/j/
+popd
+
+echo $(( $j + 1 )) > j
+

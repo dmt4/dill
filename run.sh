@@ -1,25 +1,36 @@
 #!/bin/bash
 
+# extif=eno1
+extif=wlp3s0
+
 ma=( \
     52:54:0e:93:25:76 \
     52:54:9d:84:d4:42 \
     52:54:f1:b4:ed:77 \
     52:54:15:7c:4a:27 \
-    52:54:a6:22:d2:86 \
-    52:54:fc:c1:52:f4 \
-    52:54:46:ef:a8:f5 \
-    52:54:26:9e:24:19 \
-    52:54:33:87:6b:d0 \
+#     52:54:a6:22:d2:86 \
+#     52:54:fc:c1:52:f4 \
+#     52:54:46:ef:a8:f5 \
+#     52:54:26:9e:24:19 \
+#     52:54:33:87:6b:d0 \
 )
 
 ##########################################3
 
+# bins=(systemctl systemd-run vde_switch \
+#     dhcpd named rndc-confgen atftpd dd \
+#     rpc.mountd rpc.nfsd exportfs xpath \
+#     nbd-server qemu-system-x86_64 sudo \
+#     mkfs.ext4 ssh-keygen kiwi          \
+# )
+
 bins=(systemctl systemd-run vde_switch \
     dhcpd named rndc-confgen atftpd dd \
-    rpc.mountd rpc.nfsd exportfs xpath \
+    rpc.mountd rpc.nfsd exportfs       \
     nbd-server qemu-system-x86_64 sudo \
-    mkfs.ext4 ssh-keygen kiwi          \
+    mkfs.ext4 ssh-keygen arch-chroot   \
 )
+
 
 for i in ${bins[@]} ; do
     which $i
@@ -35,6 +46,7 @@ if [ "$?" != "0" ]; then
     exit $?
 fi
 
+oldfw=$(sysctl -n net.ipv4.ip_forward)
 function cleanup {
     exportfs -f
     exportfs -ua
@@ -43,14 +55,22 @@ function cleanup {
     rndc stop 2>/dev/null
     rm -f named/run/*.{jnl,zone,hint}
     rm -f dhcpd/dhcpd.lease
+    
+    [ -n "$oldfw" ] && sysctl -w net.ipv4.ip_forward=$oldfw
+    iptables -t nat -D POSTROUTING -o $extif -j MASQUERADE
 }
 
 cleanup
 
 modprobe tun
-vde_switch -daemon -tap tap0 -group users -mod 660
+vde_switch -daemon -tap tap0 -group $(id -gn $SUDO_GID) -mod 660
 ip addr add 10.0.0.1/24 dev tap0
 ip link set dev tap0 up
+
+# iptables -t mangle -A PREROUTING -i tap0 -j TTL --ttl-inc 1
+iptables -t nat -A POSTROUTING -o $extif -j MASQUERADE
+sysctl -w net.ipv4.ip_forward=1
+
 
 n=${#ma[*]}
 # echo ${ma[*]}
@@ -118,6 +138,5 @@ trap "{ cleanup; systemctl stop dill.scope; }" SIGINT
 
 wait
 
-
-
+cleanup
 systemctl stop dill.scope

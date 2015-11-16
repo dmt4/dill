@@ -1,0 +1,16 @@
+#!/bin/bash
+
+j=$1
+
+[ -z "$j" ] && echo 'job id to axe not given'
+[ -z "$j" ] && exit 1
+
+
+export JOBID=$j
+
+pssh -h /var/spool/j/${j}/h 'kill -9 $(cat /sys/fs/cgroup/cpuset/compu/j$JOBID/tasks)'
+pssh -h /var/spool/j/${j}/h 'cgdelete -g cpuset:compu/j$JOBID -r'
+pssh -h /var/spool/j/${j}/h 'rm -rf /var/spool/j/$JOBID'
+rm -rf /var/spool/j/$JOBID
+
+
